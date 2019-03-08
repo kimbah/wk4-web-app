@@ -33,6 +33,15 @@ if (isset($_POST['submit'])) {
 ?>
 
 <!-- below this line should be the rest of the page contents -->
+<?php include "templates/header.php"; ?>
+
+<h2>Add a work</h2>
+
+<?php if(isset($_POST['submit']) && $statement) { ?>
+<p>Work successfully added</p>
+<?php } ?>
+
+<!-- form to collect data for each artwork -->
     <form method="post">
         <label for="artistname">Artist Name</label>
         <input type="text" name="artistname" id="artistname">
