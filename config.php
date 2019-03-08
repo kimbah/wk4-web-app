@@ -2,9 +2,7 @@
 
 $host = "localhost";
 $username = "root";
-$password = "mysql";
+$password = "donna35drh";
 $dbname = "ben_test";
 $dsn = "mysql:host=$host;dbname=$dbname";
-$options = array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-);
+$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];

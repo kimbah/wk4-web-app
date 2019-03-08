@@ -12,12 +12,12 @@ if (isset($_POST['submit'])) {
         $connection = new PDO($dsn, $username, $password, $options);
 		
         // SECOND: Get the contents of the form and store it in an array
-        $new_work = array( 
+        $new_work = [
             "artistname" => $_POST['artistname'],
             "worktitle" => $_POST['worktitle'],
             "workdate" => $_POST['workdate'],
             "worktype" => $_POST['worktype'],
-        );
+        ];
         
         // THIRD: Turn the array into a SQL statement
         $sql = "INSERT INTO works (artistname, worktitle, workdate, worktype) VALUES (:artistname, :worktitle, :workdate, :worktype)";
@@ -45,6 +45,15 @@ if (isset($_POST['submit'])) {
 
         <label for="worktype">Work Type</label>
         <input type="text" name="worktype" id="worktype">
+        
+        <!--
+        <label for="work-description">Work Description</label>
+        <input type="textarea" name="work-description" id="work-description">
+        <label for="purchase-date">Purchase Date</label>
+        <input type="textarea" name="purchase-date" id="purchase-date">
+        <label for="purchase-details">Purchase Details</label>
+        <input type="textarea" name="purchase-details" id="purchase-details">
+        -->
 
         <input type="submit" name="submit" value="Submit">
 
