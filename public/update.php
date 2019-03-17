@@ -1,6 +1,5 @@
 <?php
 // this code will only execute after the submit button is clicked
-if (isset($_POST['submit'])) {
 	
     // include the config file that we created before
     require "../config.php"; 
@@ -24,15 +23,10 @@ if (isset($_POST['submit'])) {
         // if there is an error, tell us what it is
 		echo $sql . "<br>" . $error->getMessage();
 	}	
-}
 ?>
 
 <?php include "templates/header.php"; ?>
 
-<?php  
-    if (isset($_POST['submit'])) {
-        //if there are some results
-        if ($result && $statement->rowCount() > 0) { ?>
 <h2>Results</h2>
 
 <?php 
@@ -47,6 +41,7 @@ if (isset($_POST['submit'])) {
     <?php echo $row['worktitle']; ?><br> Work Date:
     <?php echo $row['workdate']; ?><br> Work type:
     <?php echo $row['worktype']; ?><br>
+    <a href='update-work.php?id=<?php echo $row['id']; ?>'>Edit</a>
 </p>
 <?php 
                             // this willoutput all the data from the array
@@ -55,8 +50,6 @@ if (isset($_POST['submit'])) {
 
 <hr>
 <?php }; //close the foreach
-        }; 
-    }; 
 ?>
 
 <form method="post">

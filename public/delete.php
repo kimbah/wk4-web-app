@@ -1,13 +1,43 @@
 <?php
 // this code will only execute after the submit button is clicked
-if (isset($_POST['submit'])) {
 	
     // include the config file that we created before
-    require "../config.php"; 
+    require "../config.php";
+    require "common.php";
     
+    // This code will only run if the delete button is clicked
+    if (isset($_GET["id"])) {
     // this is called a try/catch statement 
-	try {
-        // FIRST: Connect to the database
+        try {
+                // define database connection
+                $connection = new PDO($dsn, $username, $password, $options);
+                
+                // set id variable
+                $id = $_GET["id"];
+                
+                // Create the SQL 
+                $sql = "DELETE FROM works WHERE id = :id";
+
+                // Prepare the SQL
+                $statement = $connection->prepare($sql);
+                
+                // bind the id to the PDO
+                $statement->bindValue(':id', $id);
+                
+                // execute the statement
+                $statement->execute();
+
+                // Success message
+                $success = "Work successfully deleted";
+
+        } catch(PDOException $error) {
+            // if there is an error, tell us what it is
+            echo $sql . "<br>" . $error->getMessage();
+        }
+};
+
+    // This code runs on page load
+    try {
         $connection = new PDO($dsn, $username, $password, $options);
 		
         // SECOND: Create the SQL 
@@ -19,21 +49,16 @@ if (isset($_POST['submit'])) {
         
         // FOURTH: Put it into a $result object that we can access in the page
         $result = $statement->fetchAll();
-
-	} catch(PDOException $error) {
-        // if there is an error, tell us what it is
-		echo $sql . "<br>" . $error->getMessage();
-	}	
-}
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
 ?>
 
 <?php include "templates/header.php"; ?>
 
-<?php  
-    if (isset($_POST['submit'])) {
-        //if there are some results
-        if ($result && $statement->rowCount() > 0) { ?>
-<h2>Results</h2>
+<h2>Delete a user</h2>
+
+<?php if ($success) echo $success; ?>
 
 <?php 
                 // This is a loop, which will loop through each result in the array
@@ -47,6 +72,7 @@ if (isset($_POST['submit'])) {
     <?php echo $row['worktitle']; ?><br> Work Date:
     <?php echo $row['workdate']; ?><br> Work type:
     <?php echo $row['worktype']; ?><br>
+    <a href=delete.php?id=<?php echo $row['id']; ?>'>Delete</a>
 </p>
 <?php 
                             // this willoutput all the data from the array
@@ -55,8 +81,6 @@ if (isset($_POST['submit'])) {
 
 <hr>
 <?php }; //close the foreach
-        }; 
-    }; 
 ?>
 
 <form method="post">
